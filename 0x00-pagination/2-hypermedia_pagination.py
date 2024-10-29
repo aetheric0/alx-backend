@@ -3,14 +3,15 @@
 """
 import csv
 import math
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 
 
 def index_range(page: int, page_size: int) -> Tuple[int]:
     """ Returns a tuple that shows the range of indexes
     for the pagination parameters supplied
     """
-    start_index = (page - 1) * page_size
+    start_index = 1
+    start_index = (page - start_index) * page_size
     end_index = start_index + page_size
     return (start_index, end_index)
 
@@ -46,3 +47,19 @@ class Server:
         if end_index > len(self.__dataset) or start_index >= len(self.__dataset):
             return index_data
         return self.__dataset[start_index:min(end_index, len(self.__dataset))]
+
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
+        index_data = self.get_page(page, page_size)
+        total_data = len(self.dataset())
+        total_pages = (total_data + page_size - 1) // page_size
+
+        data_dict = {
+            'page_size': len(index_data),
+            'page': page,
+            'data': index_data,
+            'next_page': page + 1 if page < total_pages else None,
+            'prev_page': page - 1 if page > 1 else None,
+            'total_pages': total_pages
+        }
+
+        return data_dict
