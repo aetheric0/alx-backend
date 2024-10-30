@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" BaseCaching module
+""" Module implements caching from the base module
 """
 
 
