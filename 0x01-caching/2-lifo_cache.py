@@ -18,7 +18,7 @@ class LIFOCache(BaseCaching):
         max size
         """
         if key is None or item is None:
-            pass
+            return
         else:
             self.cache_data[key] = item
             if len(self.cache_data) > BaseCaching.MAX_ITEMS:
